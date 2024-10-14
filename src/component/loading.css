@@ -1,0 +1,57 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Căn giữa theo chiều dọc */
+    font-size: 4rem; /* Tăng kích thước chữ */
+    color: #38e184; /* Màu chữ */
+    font-family: "Fredoka", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.loading span {
+    animation: bounce 1.5s infinite;
+    margin: 0 8px; /* Tăng khoảng cách giữa các chữ */
+    border-radius: 50%; /* Làm cho chữ tròn hơn */
+}
+
+.loading span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+.loading span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+.loading span:nth-child(4) {
+    animation-delay: 0.3s;
+}
+.loading span:nth-child(5) {
+    animation-delay: 0.4s;
+}
+.loading span:nth-child(6) {
+    animation-delay: 0.5s;
+}
+.loading span:nth-child(7) {
+    animation-delay: 0.6s;
+}
+.loading span:nth-child(8) {
+    animation-delay: 0.7s;
+}
+.loading span:nth-child(9) {
+    animation-delay: 0.8s;
+}
+.loading span:nth-child(10) {
+    animation-delay: 0.9s;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px); /* Điều chỉnh độ nhảy */
+    }
+}
