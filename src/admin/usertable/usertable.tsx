@@ -12,13 +12,13 @@ import {
     ChipProps,
     Pagination,
 } from "@nextui-org/react";
-import { EditIcon } from "./EditIcon";
 import { DeleteIcon } from "./DeleteIcon";
 import { columns } from "./data";
 import { API_FetchUserPage } from "../../service/api.admin.custom";
 // Modal
-import ModalCreateUser from "../usertable/component/modalCreateUser/modelCreateUer";
-import ModalViewUser from "../usertable/component/modalViewUser/modalViewUser";
+import ModalCreateUser from "./component/ModalCreateUser/modelCreateUer";
+import ModalViewUser from "./component/ModalViewUser/modalViewUser";
+import PopoverDeleteUser from "./component/PopoverDeleteUser/popoverDeleteUser";
 const statusColorMap: Record<string, ChipProps["color"]> = {
     true: "success",
     false: "danger",
@@ -104,14 +104,9 @@ export default function App() {
                                 <ModalViewUser></ModalViewUser>
                             </span>
                         </Tooltip>
-                        <Tooltip content="Edit user">
-                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                <EditIcon />
-                            </span>
-                        </Tooltip>
                         <Tooltip color="danger" content="Delete user">
                             <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                <DeleteIcon />
+                                <PopoverDeleteUser></PopoverDeleteUser>
                             </span>
                         </Tooltip>
                     </div>
