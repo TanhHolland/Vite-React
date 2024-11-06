@@ -16,7 +16,7 @@ import { EyeIcon } from "./EyeIcon";
 import { Image } from "@nextui-org/react";
 import { notification } from "antd";
 import { API_UpdateUser } from "../../../../service/api.admin.custom";
-export default function App({ user }: any) {
+export default function App({ book }: any) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isVisible, setIsVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -28,7 +28,7 @@ export default function App({ user }: any) {
     const phone = phoneRef?.current?.value;
     if (name && phone) {
       try {
-        const response = await API_UpdateUser(user._id, name, phone);
+        const response = await API_UpdateUser(book._id, name, phone);
         if (response.data.data) {
           notification.success({
             message: "Update user thanh cong",
@@ -59,7 +59,7 @@ export default function App({ user }: any) {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                View User
+                View Book
               </ModalHeader>
               <ModalBody>
                 <div className="flex gap-10 items-center">
@@ -67,63 +67,68 @@ export default function App({ user }: any) {
                     <Image
                       width={300}
                       alt="NextUI hero Image"
-                      src={`${import.meta.env.VITE_URL_IMAGE}/${user.avatar}`}
+                      src={`${import.meta.env.VITE_URL_IMAGE_BOOK}/${
+                        book.thumbnail
+                      }`}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-10">
                     <Input
-                      isDisabled
-                      value={user.email}
+                      isDisabled={isDisabled}
+                      value={book.author}
                       autoFocus
-                      endContent={
-                        <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
-                      label="Email"
-                      placeholder="Enter your email"
+                      label="Author"
+                      placeholder="Enter your author"
                       variant="bordered"
                     />
                     <Input
-                      isDisabled
-                      value={user.email}
-                      endContent={
-                        <button
-                          className="focus:outline-none"
-                          type="button"
-                          onClick={toggleVisibility}
-                          aria-label="toggle password visibility"
-                        >
-                          {isVisible ? (
-                            <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                          ) : (
-                            <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                          )}
-                        </button>
-                      }
-                      label="Password"
-                      placeholder="Enter your password"
-                      type={isVisible ? "text" : "password"}
+                      isDisabled={isDisabled}
+                      value={book.category}
+                      label="Category"
+                      placeholder="Enter your category"
                       variant="bordered"
                     />
                     <Input
                       isDisabled={isDisabled}
                       ref={nameRef}
-                      defaultValue={user.fullName}
-                      endContent={
-                        <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
-                      label="Name"
-                      placeholder="Enter your name"
+                      defaultValue={book.mainText}
+                      label="Book Title"
+                      placeholder="Enter your bookTitle"
+                      variant="bordered"
+                    />
+                    <Input
+                      isDisabled
+                      ref={phoneRef}
+                      defaultValue={book.createdAt}
+                      label="Create At"
+                      variant="bordered"
+                    />
+                    <Input
+                      isDisabled
+                      ref={phoneRef}
+                      defaultValue={book.updatedAt}
+                      label="Update At"
                       variant="bordered"
                     />
                     <Input
                       isDisabled={isDisabled}
                       ref={phoneRef}
-                      defaultValue={user.phone}
-                      endContent={
-                        <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
-                      label="Phone"
-                      placeholder="Enter your phone"
+                      defaultValue={book.price}
+                      label="Price"
+                      variant="bordered"
+                    />
+                    <Input
+                      isDisabled
+                      ref={phoneRef}
+                      defaultValue={book.quantity}
+                      label="Quantity"
+                      variant="bordered"
+                    />
+                    <Input
+                      isDisabled
+                      ref={phoneRef}
+                      defaultValue={book.sold}
+                      label="Sold"
                       variant="bordered"
                     />
                   </div>

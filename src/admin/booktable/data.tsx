@@ -1,8 +1,12 @@
 const columns = [
-    { name: "NAME", uid: "name" },
-    { name: "ROLE", uid: "role" },
-    { name: "STATUS", uid: "status" },
-    { name: "ACTIONS", uid: "actions" },
+    { name: "THUMBNAIL", uid: "thumbnail" },
+    { name: "BOOK TITLE", uid: "mainText" },
+    { name: "CATEGORY", uid: "category" },
+    { name: "AUTHOR", uid: "author" },
+    { name: "PRICE", uid: "price" },
+    { name: "QUANTITY", uid: "quantity" },
+    { name: "UPDATE", uid: "updatedAt" },
+    { name: "ACTION", uid: "actions" },
 ];
 
 const users = [

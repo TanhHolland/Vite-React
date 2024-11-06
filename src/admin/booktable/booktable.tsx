@@ -17,11 +17,12 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Image,
 } from "@nextui-org/react";
 import type { Selection } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
 import { columns } from "./data";
-import { API_FetchUserWithParams } from "../../service/api.admin.custom";
+import { API_FetchBookWithParams } from "../../service/api.admin.custom";
 import { notification } from "antd";
 import * as XLSX from "xlsx";
 // Modal
@@ -35,24 +36,29 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 
 export default function App() {
-  interface User {
+  interface Book {
     _id: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    role: string;
-    avatar: string;
-    isActive: boolean;
+    author: string;
+    category: string;
+    createdAt: string;
+    mainText: string;
+    price: number;
+    quantity: number;
+    slider: string[];
+    sold: number;
+    thumbnail: string;
+    updatedAt: string;
+    _v: number;
   }
-  const [users, setUsers] = useState<User[]>([]);
+  const [books, setBooks] = useState<Book[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const handlePagination = useCallback((page: number) => {
     setCurrentPage(page);
   }, []);
 
-  const [name, setName] = useState(""); // State để giữ giá trị name
-  const [email, setEmail] = useState(""); // State để giữ giá trị email
+  const [bookTitle, setBookTitle] = useState(""); // State để giữ giá trị book
+  const [author, setAuthor] = useState(""); // State để giữ giá trị author
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([])
   ); // select sort
@@ -61,18 +67,18 @@ export default function App() {
     [selectedKeys]
   );
   React.useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchBooks = async () => {
       try {
-        const res = API_FetchUserWithParams(
+        const res = API_FetchBookWithParams(
           currentPage,
           5,
-          name,
-          email,
+          bookTitle,
+          author,
           selectedArrayValueSort
         );
         res.then((data) => {
-          // console.log(data.data.data.result);
-          setUsers(data.data.data.result);
+          console.log(data.data.data.result);
+          setBooks(data.data.data.result);
           setTotalPage(data.data.data.meta.pages);
         });
       } catch (error: any) {
@@ -81,65 +87,64 @@ export default function App() {
         });
       }
     };
-    fetchUsers();
-  }, [currentPage, name, email, selectedArrayValueSort]);
-  const searchNameRef = useRef<HTMLInputElement | null>(null);
-  const searchEmailRef = useRef<HTMLInputElement | null>(null);
+    fetchBooks();
+  }, [currentPage, bookTitle, author, selectedArrayValueSort]);
+  const searchBookTitleRef = useRef<HTMLInputElement | null>(null);
+  const searchAuthorRef = useRef<HTMLInputElement | null>(null);
   const fetchUsersWithParam = useCallback(() => {
-    setName(searchNameRef.current?.value || "");
-    setEmail(searchEmailRef.current?.value || "");
+    setBookTitle(searchBookTitleRef.current?.value || "");
+    setAuthor(searchAuthorRef.current?.value || "");
     setCurrentPage(1);
   }, []);
-  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
+  const renderCell = React.useCallback((book: Book, columnKey: React.Key) => {
+    const cellValue = book[columnKey as keyof Book];
 
     switch (columnKey) {
-      case "name":
+      case "thumbnail":
         return (
-          <User
-            avatarProps={{
-              radius: "lg",
-              src: `${import.meta.env.VITE_LOCALHOST}/images/avatar/${
-                user.avatar
-              }`,
-            }}
-            description={user.email}
-            name={user.fullName}
-          >
-            {user.email}
-          </User>
+          // `${import.meta.env.VITE_LOCALHOST}/images/avatar/${user.avatar}`
+          <Image
+            width={300}
+            alt={book.mainText}
+            src={`${import.meta.env.VITE_LOCALHOST}/images/book/${
+              book.thumbnail
+            }`}
+          />
         );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">
-              {cellValue}
-            </p>
-          </div>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[`${user.isActive ? "true" : "false"}`]}
-            size="sm"
-            variant="flat"
-          >
-            {user.isActive ? "Active" : "Inactive"}
-          </Chip>
-        );
+      case "mainText":
+        return <span>{book.mainText}</span>;
+      case "category":
+        return <span>{book.category}</span>;
+      case "author":
+        return <span>{book.author}</span>;
+      case "price":
+        return <span>{book.price}</span>;
+      case "quantity":
+        return <span>{book.quantity}</span>;
+      case "updatedAt":
+        const isoDate = book.updatedAt;
+        const date = new Date(isoDate);
+        // Chuyển đổi thành định dạng dễ đọc
+        const readableDate = date.toLocaleString("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        return <span>{readableDate}</span>;
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Details">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <ModalViewBook user={user}></ModalViewBook>
+                <ModalViewBook book={book}></ModalViewBook>
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <PopoverDeleteBook user={user}></PopoverDeleteBook>
+                <PopoverDeleteBook user={book}></PopoverDeleteBook>
               </span>
             </Tooltip>
           </div>
@@ -150,8 +155,8 @@ export default function App() {
   }, []);
   const handleExportFile = useCallback(() => {
     /* generate worksheet and workbook */
-    console.log(users);
-    const worksheet = XLSX.utils.json_to_sheet(users);
+    console.log(books);
+    const worksheet = XLSX.utils.json_to_sheet(books);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Demo");
     /* fix headers */
@@ -169,15 +174,15 @@ export default function App() {
         <div className="flex items-center gap-5">
           <Input
             className="w-full sm:max-w-[50%]"
-            placeholder="Search by name..."
+            placeholder="Search by Book Title..."
             startContent={<SearchIcon />}
-            ref={searchNameRef}
+            ref={searchBookTitleRef}
           />
           <Input
             className="w-full sm:max-w-[50%]"
-            placeholder="Search by email"
+            placeholder="Search by Author"
             startContent={<SearchIcon />}
-            ref={searchEmailRef}
+            ref={searchAuthorRef}
           />
         </div>
         <div className="flex items-center gap-3">
@@ -193,9 +198,8 @@ export default function App() {
               selectedKeys={selectedKeys}
               onSelectionChange={setSelectedKeys}
             >
-              <DropdownItem key="fullName">Name</DropdownItem>
-              <DropdownItem key="email">Email</DropdownItem>
-              <DropdownItem key="phone">Phone</DropdownItem>
+              <DropdownItem key="updatedAt">Update</DropdownItem>
+              <DropdownItem key="price">Price</DropdownItem>
             </DropdownMenu>
           </Dropdown>
           <Button
@@ -243,7 +247,7 @@ export default function App() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={users}>
+      <TableBody items={books}>
         {(item) => (
           <TableRow key={item._id}>
             {(columnKey) => (
