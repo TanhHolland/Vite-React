@@ -1,4 +1,4 @@
-export const EyeIcon = (props : any) => (
+export const EyeIcon = (props: any) => (
     <svg
         aria-hidden="true"
         fill="none"
