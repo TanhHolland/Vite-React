@@ -1,5 +1,5 @@
 import React from "react";
-import Hero from '../component/home/hero';
+import Hero from './book/hero';
 const App: React.FC = () => {
     return(
         <Hero></Hero>
