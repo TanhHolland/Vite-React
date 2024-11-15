@@ -1,14 +1,13 @@
-import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import { DeleteIcon } from "./DeleteIcon";
-import { API_DeleteUser } from "../../../../service/api.admin.custom";
+import { API_DeleteBook } from "../../../../service/api.admin.custom";
 import { notification } from "antd";
-export default function App({ user }: any) {
-  const deleteUser = async () => {
+export default function App({ book }: any) {
+  const deleteBook = async () => {
     try {
-      const response = await API_DeleteUser(user._id);
+      const response = await API_DeleteBook(book._id);
       if (response.data.data) {
         notification.success({
-          message: "Delete user thanh cong",
+          message: "Delete Book thanh cong",
         });
       }
     } catch (error: any) {
@@ -17,5 +16,5 @@ export default function App({ user }: any) {
       });
     }
   };
-  return <DeleteIcon onClick={deleteUser}/>;
+  return <DeleteIcon onClick={deleteBook}/>;
 }

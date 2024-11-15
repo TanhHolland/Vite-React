@@ -77,7 +77,7 @@ export default function App() {
           selectedArrayValueSort
         );
         res.then((data) => {
-          console.log(data.data.data.result);
+          // console.log(data.data.data.result);
           setBooks(data.data.data.result);
           setTotalPage(data.data.data.meta.pages);
         });
@@ -144,7 +144,7 @@ export default function App() {
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
               <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <PopoverDeleteBook user={book}></PopoverDeleteBook>
+                <PopoverDeleteBook book={book}></PopoverDeleteBook>
               </span>
             </Tooltip>
           </div>
@@ -155,7 +155,7 @@ export default function App() {
   }, []);
   const handleExportFile = useCallback(() => {
     /* generate worksheet and workbook */
-    console.log(books);
+    // console.log(books);
     const worksheet = XLSX.utils.json_to_sheet(books);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Demo");
