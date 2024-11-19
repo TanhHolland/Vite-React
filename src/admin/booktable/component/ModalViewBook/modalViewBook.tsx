@@ -21,10 +21,12 @@ import { notification } from "antd";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import type { UploadProps, GetProp, UploadFile } from "antd";
 import { Button, message, Upload, Image } from "antd";
+import { v4 as uuidv4 } from 'uuid';
 interface TypeCategory {
     key: string;
     label: string;
 }
+
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 export default function App({ book }: any) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -112,6 +114,7 @@ export default function App({ book }: any) {
     const dummyRequestSlider = async ({ file, onSuccess }: any) => {
         const res = await API_UploadBookImg(file);
         if (res && res.data) {
+            console.log(res.data)
             onSuccess("ok");
             setFileSlider((prevState) => [
                 ...(prevState || []),
@@ -155,8 +158,11 @@ export default function App({ book }: any) {
         fileList: fileList,
         onChange: handleChange,
         customRequest: dummyRequestSlider,
-        onRemove() {
-             
+        onRemove(info) {
+            console.log(info);
+            setFileSlider((prevState) => {
+                return prevState?.filter(item => item !== info.name);
+            });           
         },
     };
     const handleUpdate = async () => {
