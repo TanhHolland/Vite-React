@@ -74,8 +74,9 @@ export default function App() {
     //   </NavbarContent>
     // </Navbar>
     <header>
-      <div>
-        <img></img>
+      <div class="flex ">
+        <img src="https://salt.tikicdn.com/ts/upload/0e/07/78/ee828743c9afa9792cf20d75995e134e.png" />
+        <span>Tốt & Nhanh</span>
       </div>
     </header>
   );

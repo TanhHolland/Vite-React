@@ -6,7 +6,7 @@ export default function Root() {
   const darkMode = useAppSelector((state) => state.darkMode.value);
   return (
     <>
-      <main className={`${darkMode} text-foreground bg-background`}>
+      <main className={`text-foreground bg-background`}>
         <Header></Header>
         <Outlet></Outlet>
         <Footer></Footer>
