@@ -1,8 +1,10 @@
 import React from "react";
-import Hero from './book/hero';
+import Hero from "./home/hero";
 const App: React.FC = () => {
-    return(
-        <Hero></Hero>
-    );
-}
+  return (
+    <div className="pb-4 bg-[#F5F5FA]">
+      <Hero></Hero>
+    </div>
+  );
+};
 export default App;
