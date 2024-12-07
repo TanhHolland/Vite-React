@@ -1,8 +1,14 @@
 import { FilterOutlined } from "@ant-design/icons";
 import Product from "./product";
+import React from "react";
+import FilterProduct from "./listfilter";
 const App: React.FC = () => {
   const classButton =
     "border-solid px-[12px] py-[6px] border-[rgb(221,_221,_227)] rounded-2xl border-1";
+  const [isFilter, setIsFilter] = React.useState<boolean>(false);
+  const handleFilter = () => {
+    setIsFilter(!isFilter);
+  }
   return (
     <section className="flex gap-[20px] px-[40px] pt-[20px] items-start">
       <div className="bg-white text-[rgb(39,_39,_42)] flex flex-col rounded-lg h-full">
@@ -88,12 +94,13 @@ const App: React.FC = () => {
                 />
               </button>
             </div>
-            <div className="shrink-0 flex ml-5">
+            <div className="shrink-0 flex ml-5 relative">
               <div className="h-[30px] border-solid border-1 mt-7"></div>
-              <div className="flex items-center gap-1 ml-3 px-[12px] py-[6px] hover:bg-slate-50 border-solid border-[rgb(221,_221,_227)] border-1 rounded-xl mt-6">
+              <div className="flex items-center gap-1 ml-3 px-[12px] py-[6px] hover:bg-slate-50 border-solid border-[rgb(221,_221,_227)] border-1 rounded-xl mt-6 cursor-pointer" onClick={handleFilter}>
                 <FilterOutlined style={{ fontSize: "20px" }} type="setting" />
                 <span>Tất cả</span>
               </div>
+              {isFilter && <FilterProduct></FilterProduct>}
             </div>
           </div>
         </div>

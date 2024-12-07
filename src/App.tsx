@@ -43,7 +43,7 @@ function App() {
                     errorElement: <ErrorPage></ErrorPage>,
                 },
                 {
-                    path: "/book",
+                    path: "/book/:id",
                     element: <Book></Book>,
                     errorElement: <ErrorPage></ErrorPage>,
                 },

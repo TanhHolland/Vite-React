@@ -2,7 +2,7 @@ import React from "react";
 import { Rate } from "antd";
 const App: React.FC = () => {
   return (
-    <a href="#!">
+    <a href="/book/123">
       <div className="pb-2 bg-white rounded-lg overflow-hidden h-full flex flex-col">
         <div className="w-full h-[236px] relative">
           <img
