@@ -1,8 +1,26 @@
 import { useState, useEffect } from "react";
-
-const App: React.FC = () => {
+interface Book {
+  _id: string;
+  author: string;
+  category: string;
+  createdAt: string;
+  mainText: string;
+  price: number;
+  quantity: number;
+  slider: string[];
+  sold: number;
+  thumbnail: string;
+  updatedAt: string;
+  _v: number;
+}
+type Props = {
+  product: Book | undefined;
+};
+const App: React.FC<Props> = ({ product }) => {
   return (
-    <img src="https://plus.unsplash.com/premium_photo-1709311452215-496c6740ca59?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"></img>
+    <img
+      src={`${import.meta.env.VITE_LOCALHOST}/images/book/${product?.thumbnail}`}
+    ></img>
   );
 };
 
