@@ -1,13 +1,33 @@
 import React from "react";
 import { Rate } from "antd";
-const App: React.FC = () => {
+import { Link } from "react-router-dom";
+interface Book {
+  _id: string;
+  author: string;
+  category: string;
+  createdAt: string;
+  mainText: string;
+  price: number;
+  quantity: number;
+  slider: string[];
+  sold: number;
+  thumbnail: string;
+  updatedAt: string;
+  _v: number;
+}
+type ProductProps = {
+  product: Book;
+};
+const App: React.FC<ProductProps> = ({ product }) => {
   return (
-    <a href="/book/123">
+    <Link to={`/book/${product._id}`}>
       <div className="pb-2 bg-white rounded-lg overflow-hidden h-full flex flex-col">
         <div className="w-full h-[236px] relative">
           <img
-            src="https://images.unsplash.com/photo-1731370963535-aa6e57ed40f6?q=80&w=2184&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
+            src={`${import.meta.env.VITE_LOCALHOST}/images/book/${
+              product.thumbnail
+            }`}
+            alt={product.mainText}
             className="object-cover w-full h-full absolute"
           />
           <img
@@ -19,7 +39,7 @@ const App: React.FC = () => {
         <div className="px-3 flex flex-col flex-1">
           <div className="flex items-center gap-2 mt-1">
             <h3 className="text-[rgb(255,_66,_78)] text-lg font-semibold">
-              500.200₫
+              {product.price + " ₫"}
             </h3>
             <span className="px-1 bg-[rgb(245,_245,_250)] rounded-lg text-sm font-medium">
               -18%
@@ -28,7 +48,7 @@ const App: React.FC = () => {
           {/* Content */}
           <div className="mt-4 justify-between flex flex-col flex-1 gap-2">
             <div>
-              <h3 className="text-sm text-[rgb(128,_128,_137)]">LE THI HIEP</h3>
+              <h3 className="text-sm text-[rgb(128,_128,_137)]">{product.author}</h3>
               <p className="break-words text-base leading-6	line-clamp-3">
                 Combo Bộ sách Tiếng Việt cho người nước ngoài chương trình Sơ
                 cấp và Khám phá tiếng Việt hiện đại
@@ -36,7 +56,7 @@ const App: React.FC = () => {
               <div className="flex items-center gap-3 mt-2">
                 <Rate disabled defaultValue={5} style={{ fontSize: "10px" }} />
                 <span className="text-sm text-[rgb(128,_128,_137)]">
-                  Da ban 15
+                  Da ban {product.sold}
                 </span>
               </div>
             </div>
@@ -56,7 +76,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 export default App;
