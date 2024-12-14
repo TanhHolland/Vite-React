@@ -2,6 +2,7 @@ import React from "react";
 import SliderBook from "./book/sliderBook";
 import Text from "./book/text";
 const App: React.FC = () => {
+    const [isHidden, setIsHidden] = React.useState<boolean>(true);
     return (
         <div className="flex items-start bg-[#F5F5FA] py-4 gap-5 justify-center">
             {/* cot 1 */}
@@ -82,11 +83,17 @@ const App: React.FC = () => {
                 </div>
                 <div className="bg-white rounded-lg p-3">
                     <span className="font-semibold">Mô tả sản phẩm</span>
-                    <div className="h-[250px] overflow-hidden py-4 relative">
+                    <div className="h-[250px] overflow-hidden py-4 relative" style={{overflow : isHidden ? "hidden" : "visible",height : isHidden ? "250px" : "100%" }}>
                         <Text></Text>
-                        <div className="h-[200px] absolute w-full bottom-0 left-0 bg-[linear-gradient(rgba(255,_255,_255,_0),_rgb(255,_255,_255))]"></div>
+                        <div className="h-[200px] absolute w-full bottom-0 left-0 bg-[linear-gradient(rgba(255,_255,_255,_0),_rgb(255,_255,_255))]" style={{display : isHidden ? "block" : "none"}}></div>
                     </div>
-                    <a className="block w-full text-[rgb(24,_158,_255)] text-center" href="#!">Xem thêm</a>
+                    <a
+                        className="block w-full text-[rgb(24,_158,_255)] text-center"
+                        href="#!"
+                        onClick={() => setIsHidden(!isHidden)}
+                    >
+                        {isHidden ? "Xem them" : "Rut gon"}
+                    </a>
                 </div>
             </div>
             {/* cot 3 */}

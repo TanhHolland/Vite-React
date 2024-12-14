@@ -98,7 +98,7 @@ const App: React.FC = () => {
               <div className="h-[30px] border-solid border-1 mt-7"></div>
               <div className="flex items-center gap-1 ml-3 px-[12px] py-[6px] hover:bg-slate-50 border-solid border-[rgb(221,_221,_227)] border-1 rounded-xl mt-6 cursor-pointer" onClick={handleFilter}>
                 <FilterOutlined style={{ fontSize: "20px" }} type="setting" />
-                <span>Tất cả</span>
+                <button>Tất cả</button>
               </div>
               {isFilter && <FilterProduct></FilterProduct>}
             </div>
