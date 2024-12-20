@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Home from "./pages/home";
 import Book from "./pages/book";
+import Customer from "./pages/customer";
 import { useAppDispatch } from "./app/hook";
 import { API_FetchAccount } from "./service/api.user.custom";
 import { updateUser } from "./redux/user/userSlice";
@@ -47,6 +48,11 @@ function App() {
                     element: <Book></Book>,
                     errorElement: <ErrorPage></ErrorPage>,
                 },
+                {
+                    path: "/customer/:id",
+                    element: <Customer></Customer>,
+                    errorElement: <ErrorPage></ErrorPage>,
+                }
             ],
         },
         {

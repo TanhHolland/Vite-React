@@ -6,11 +6,9 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import React from "react";
 import ListAccount from "./header/listaccount";
 export default function App() {
-    const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(
         (state) => state.user.isAuthenticated
     );
-    const [isHidden, setIsHidden] = React.useState<boolean>(false);
     return (
         <header className="flex items-start px-[20px] py-[20px] gap-[48px] border-solid border-b-1">
             <a href="/">
@@ -80,7 +78,7 @@ export default function App() {
                         alt="Tai khoan"
                         className="w-[24px] h-[24px] rounded-full"
                     />
-                    <a href="#!" className="text-[rgb(128,_128,_137)]">
+                    <a href={isAuthenticated ? "#!" : "/login"} className="text-[rgb(128,_128,_137)]">
                         Tài khoản
                     </a>
                     {isAuthenticated && (
@@ -89,12 +87,14 @@ export default function App() {
                         </div>
                     )}
                 </div>
-                <Badge count={1}>
-                    <ShoppingCartOutlined
-                        style={{ fontSize: "25px" }}
-                        type="setting"
-                    />
-                </Badge>
+                <button className="hover:bg-slate-300 rounded-lg p-[8px]">
+                    <Badge count={0}>
+                        <ShoppingCartOutlined
+                            style={{ fontSize: "25px" }}
+                            type="setting"
+                        />
+                    </Badge>
+                </button>
             </div>
         </header>
     );
