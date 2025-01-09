@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlide from "../redux/user/userSlice";
 import darkModeSlice from "../redux/darkmode/darkmodeSlice";
+import cartsSlice from "../redux/carts/cartsSlice";
 export const store = configureStore({
     reducer: {
         user: userSlide,
-        darkMode : darkModeSlice
+        darkMode : darkModeSlice,
+        carts : cartsSlice
     },
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -3,6 +3,8 @@ import SliderBook from "./book/sliderBook";
 import Text from "./book/text";
 import { API_FetchBookWithId } from "../service/api.user.custom";
 import { useParams } from "react-router-dom";
+import { useAppDispatch,useAppSelector } from "../app/hook";
+import { addCart } from "../redux/carts/cartsSlice";
 const App: React.FC = () => {
     interface Book {
         _id: string;
@@ -18,6 +20,8 @@ const App: React.FC = () => {
         updatedAt: string;
         _v: number;
     }
+    const dispatch = useAppDispatch();
+    const carts = useAppSelector((state) => state.carts);
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = React.useState<Book>();
     const [count, setCount] = React.useState<number>(1);
@@ -28,9 +32,10 @@ const App: React.FC = () => {
         if (count == 1) return;
         setCount((count) => count - 1);
     };
+    console.log(carts);
     const handleChangeInput = (e: any) => {
         if (!product) return;
-        if (/^\d*$/.test(e.target.value)) {
+        if (/^\d*$/.test(e.target.value) && +(e.target.value) <= product?.quantity) {
             setCount(e.target.value);
         }
     };
@@ -40,7 +45,7 @@ const App: React.FC = () => {
                 const res = await API_FetchBookWithId(id);
                 if (res.data && res.data.data) {
                     setProduct(res.data.data);
-                }
+                }        
             }
         };
         fetchBook();
@@ -174,7 +179,7 @@ const App: React.FC = () => {
                     <button className="bg-[rgb(255,-66,_78)] rounded cursor-pointer p-2 text-[rgb(255,_255,_255)]">
                         Mua ngay
                     </button>
-                    <button className="rounded cursor-pointer p-2 text-[rgb(10,_104,_255)] border-1 border-solid border-[rgb(10,_104,_255)]">
+                    <button className="rounded cursor-pointer p-2 text-[rgb(10,_104,_255)] border-1 border-solid border-[rgb(10,_104,_255)]" onClick={()=>dispatch(addCart(product))}>
                         Thêm vào giỏ
                     </button>
                 </div>
