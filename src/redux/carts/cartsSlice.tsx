@@ -14,33 +14,31 @@ interface Book {
   updatedAt: string;
   _v: number;
 }
-type Cart = {
-    _id : string,
-    product : Book,
-    quantityAdd: number
+interface CartItems {
+  cartItems : Cart[];
 }
-let initialState: Cart[] = [];
+interface Cart {
+  _id: string;
+  product: Book;
+  quantityAdd: number;
+};
+let initialState: CartItems = {
+  cartItems : []
+};
 export const cartsSlide = createSlice({
   name: "carts",
   initialState,
   reducers: {
     addCart: (state, action) => {
-      let check = false;
-      for(let i = 0; i < state.length; i++) {
-        if(state[i]._id == action.payload._id) {
-            state[i].quantityAdd += action.payload.quantityAdd;
-            check = true;
-        }
-      }
-      let cart : Cart = {
-        _id : "123",
+      const { _id ,product, quantity }: {_id: string, product: Book; quantity: number } = action.payload;
+      const existingItem : Cart | undefined = initialState.cartItems.find(item => item._id === _id);
+      if(existingItem) {
+        state.cartItems = initialState.cartItems.map((item)=> {
 
+        })
       }
-      if(!check) state.push(action.payload);
     },
-    removeCart: (state, action) => {
-      
-    },
+    removeCart: (state, action) => {},
   },
 });
 export const { addCart } = cartsSlide.actions;
